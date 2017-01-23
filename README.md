@@ -2,7 +2,7 @@
 
 *EMQ* (Erlang MQTT Broker) is a distributed, massively scalable, highly extensible MQTT message broker written in Erlang/OTP.
 
-Current docker image size: 37.1 MB 
+Current docker image size: 37.1 MB
 
 ### Get emqttd
 
@@ -11,7 +11,7 @@ You can build this docker image by yourself.
 ```bash
 git clone -b master https://github.com/emqtt/emq_docker.git
 cd emq_docker
-docker build -t emq:latest . 
+docker build -t emq:latest .
 ```
 
 ### Run emqttd
@@ -65,7 +65,7 @@ For example, set mqtt tcp port to 1883
 | ------------------------ | ------------------ | ------------------------------------- |
 | EMQ_LOADED_PLUGINS       | see content below  | default plugins emq loaded            |
 
-Default environment variable ``EMQ_LOADED_PLUGINS``, including 
+Default environment variable ``EMQ_LOADED_PLUGINS``, including
 
 - ``emq_recon``
 - ``emq_dashboard``
@@ -99,3 +99,4 @@ EMQ_LOADED_PLUGINS="emq_auth_redis | emq_recon | emq_dashboard | emq_mod_presenc
 ```
 
 All the plugin you defined in env ``EMQ_LOADED_PLUGINS`` will be loaded.
+
