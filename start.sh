@@ -193,6 +193,15 @@ do
     fi
 done
 
+
+# check if variable EMQ_CLUSTER_JOIN_NODE is set and automatically join the cluster
+if [ x"${EMQ_CLUSTER_JOIN_NODE}" != x ]
+then
+/opt/emqttd/bin/emqttd_ctl cluster join ${EMQ_CLUSTER_JOIN_NODE}
+echo "EMQ_CLUSTER_JOIN_NODE=${EMQ_CLUSTER_JOIN_NODE}"
+fi
+
+
 echo '['$(date -u +"%Y-%m-%dT%H:%M:%SZ")']:emqttd start'
 
 # monitor emqttd is running, or the docker must stop to let docker PaaS know
@@ -201,12 +210,21 @@ echo '['$(date -u +"%Y-%m-%dT%H:%M:%SZ")']:emqttd start'
 #          and docker dispatching system can known and restart this container.
 IDLE_TIME=0
 while [ x$(/opt/emqttd/bin/emqttd_ctl status |grep 'is running'|awk '{print $1}') != x ]
-do  
+do
     IDLE_TIME=`expr ${IDLE_TIME} + 1`
     echo '['$(date -u +"%Y-%m-%dT%H:%M:%SZ")']:emqttd running'
     sleep 20
 done
 
 tail $(ls /opt/emqttd/log/*)
+
+
+# check if variable EMQ_CLUSTER_JOIN_NODE is set and automatically leave the cluster when shutdown
+if [ x"${EMQ_CLUSTER_JOIN_NODE}" != x ]
+then
+/opt/emqttd/bin/emqttd_ctl cluster leave
+echo "EMQ_CLUSTER_JOIN_NODE=${EMQ_CLUSTER_JOIN_NODE}"
+fi
+
 
 echo '['$(date -u +"%Y-%m-%dT%H:%M:%SZ")']:emqttd stop'

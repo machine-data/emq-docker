@@ -54,7 +54,7 @@ Use the environment variable to configure the EMQ docker container
 | EMQ_HTTPS_ACCEPTORS      | 32                 | HTTPS/WSS acceptors                   |
 | EMQ_HTTPS_MAX_CLIENTS    | 500000             | HTTPS/WSS max clients                 |
 | EMQ_MAX_PACKET_SIZE      | 64KB               | Max Packet Size Allowed               |
-
+| EMQ_CLUSTER_JOIN_NODE    | EMPTY              | Distant node to join as EMQ_NODE_NAME |
 For example, set mqtt tcp port to 1883
 
 ``docker run --rm -ti --name emq -e "EMQ_TCP_PORT=1883" -p 18083:18083 -p 1883:1883 emq:latest``
@@ -100,4 +100,4 @@ EMQ_LOADED_PLUGINS="emq_auth_redis | emq_recon | emq_dashboard | emq_mod_presenc
 
 All the plugin you defined in env ``EMQ_LOADED_PLUGINS`` will be loaded.
 
-
+If you set EMQ_CLUSTER_JOIN_NODE, the node will try to connect to the defined node to form an emqtt cluster. When the Container is shutdown, it will leave the cluster.
